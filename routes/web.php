@@ -29,6 +29,7 @@ Route::get('/contacts/create', function () {
 Route::get('/contacts/{id}', function ($id) {
     return "Contact " . $id;
 })->where('id', '[0-9]+'); // this will accept numerical only
+//})->whereNumber('id'); // same will accept numberical
 
 Route::get('companies/{name?}', function ($name = null) {
     if ($name) {
@@ -36,4 +37,6 @@ Route::get('companies/{name?}', function ($name = null) {
     } else {
         return "All companies";
     }
-})->where('name', '[a-zA-Z]+'); // this will accept string or letters only
+    //})->where('name', '[a-zA-Z]+'); // this will accept string or letters only
+    //})->whereAlpha('name'); //same will accept string or letters only
+})->whereAlphaNumeric('name'); // this will accept string or numbers
