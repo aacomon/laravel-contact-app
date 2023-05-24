@@ -14,16 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // $html = "
-    // <h1>Contact App</h1>
-    // <div>
-    //     <a href='" . route('contacts.index') . "'>All contacts</a>
-    //     <a href='" . route('contacts.create') . "'>Add contacts</a>
-    //     <a href='" . route('contacts.show', 1) . "'>Show contacts</a>
-    // </div>
-    // ";
     return view('welcome');
-    //return $html;
 });
 
 Route::get('/contacts', function () {
