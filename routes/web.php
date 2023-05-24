@@ -14,22 +14,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $html = "
+    <h1>Contact App</h1>
+    <div>
+
+        <a href='" . route('contacts.index') . "'>All contacts</a>
+        <a href='" . route('contacts.create') . "'>Add contacts</a>
+        <a href='" . route('contacts.show', 1) . "'>Show contacts</a>
+    </div>
+    ";
+    //return view('welcome');
+    return $html;
 });
 
-Route::get('/contacts', function () {
-    return "<h1>All Contacts</h1>";
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/contacts', function () {
+        return "<h1>All contacts</h1>";
+    })->name('contacts.index');
+
+    Route::get('/contacts/create', function () {
+        return "<h1>Add new Contact</h1>";
+    })->name('contacts.create');
+
+    Route::get('/contacts/{id}', function ($id) {
+        return "Contact " . $id;
+    })->name('contacts.show');
 });
 
-Route::get('/contacts/create', function () {
-    return "<h1>Add new Contact</h1>";
-});
 
-//route parameters
-Route::get('/contacts/{id}', function ($id) {
-    return "Contact " . $id;
-})->where('id', '[0-9]+'); // this will accept numerical only
-//})->whereNumber('id'); // same will accept numberical
 
 Route::get('companies/{name?}', function ($name = null) {
     if ($name) {
