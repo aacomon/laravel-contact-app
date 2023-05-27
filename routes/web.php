@@ -13,34 +13,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+function getContacts()
+{
+    return [
+        1 => ['name' => 'Name 1', 'phone' => '1234567890'],
+        2 => ['name' => 'Name 2', 'phone' => '2345678901'],
+        3 => ['name' => 'Name 3', 'phone' => '3456789012'],
+    ];
+}
+
 Route::get('/', function () {
-    $html = "
-    <h1>Contact App</h1>
-    <div>
-
-        <a href='" . route('contacts.index') . "'>All contacts</a>
-        <a href='" . route('contacts.create') . "'>Add contacts</a>
-        <a href='" . route('contacts.show', 1) . "'>Show contacts</a>
-    </div>
-    ";
-    //return view('welcome');
-    return $html;
+    return view('welcome');
 });
 
 Route::get('/contacts', function () {
-    return "<h1>All Contacts</h1>";
-});
-
-Route::get('/contacts', function () {
-    return "<h1>All contacts</h1>";
+    $companies = [
+        1 => ['name' => 'Company One', 'contacts' => 3],
+        2 => ['name' => 'Company Two', 'contacts' => 5],
+    ];
+    $contacts = getContacts(); // call the function getContacts above
+    // return view('contacts.index', ['contacts' => $contacts]);
+    return view('contacts.index', compact('contacts', 'companies'));
 })->name('contacts.index');
 
 Route::get('/contacts/create', function () {
-    return "<h1>Add new Contact</h1>";
+    return view('contacts.create');
+    //return "<h1>Add new Contact</h1>";
 })->name('contacts.create');
 
 Route::get('/contacts/{id}', function ($id) {
-    return "Contact " . $id;
+    $contacts = getContacts();
+    abort_if(!isset($contacts[$id]), 404); // this will show when out of range and will show 404 pages instead of error
+    $contact = $contacts[$id];
+    return view('contacts.show')->with('contact', $contact);
 })->name('contacts.show');
 
 Route::get('companies/{name?}', function ($name = null) {
