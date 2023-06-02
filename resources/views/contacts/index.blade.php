@@ -31,19 +31,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @forelse ($contacts as $id => $contact)
+                                @forelse ($contacts as $index => $contact)
     
-                                    @include('contacts._contact', ['contact' => $contact])
+                                    @include('contacts._contact', ['contact' => $contact, 'index' => $index])
 
                                 @empty
-                                    <p>No contacts found</p>
-                                @endforelse --}}
+                                    @include('contacts._empty');
+                                @endforelse
 
-                                @each('contacts._contact', $contacts, 'contact', 'contacts._empty')
+                                {{-- @each('contacts._contact', $contacts, 'contact', 'contacts._empty') --}}
                             </tbody>
                         </table>
 
-                        <nav class="mt-4">
+                        {{-- <nav class="mt-4">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item disabled">
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
@@ -55,7 +55,10 @@
                                     <a class="page-link" href="#">Next</a>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav> --}}
+                        {{-- {{ $contacts->links() }} --}} 
+                        {{-- {{ $contacts->appends(request()->only('orderBy', 'q'))->links() }} --}}
+                        {{ $contacts->withQueryString()->links() }}
                     </div>
                 </div>
             </div>
